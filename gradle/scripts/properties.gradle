@@ -1,0 +1,15 @@
+buildscript {
+    ext {
+        // Project settings
+        projectGroupName = 'io.fries.nostos'
+        projectVersion = '1.0.0-SNAPSHOT'
+
+        projectSourceCompatibility = JavaVersion.VERSION_11
+        projectTargetCompatibility = JavaVersion.VERSION_11
+
+        // Dependencies
+        junitVersion = '5.4.1'
+        assertjVersion = '3.12.2'
+        mockitoVersion = '2.27.0'
+    }
+}

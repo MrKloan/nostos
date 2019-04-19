@@ -1,43 +1,20 @@
-buildscript {
-    ext {
-        // Project settings
-        projectGroupName = 'io.fries.nostos'
-        projectVersion = '1.0.0-SNAPSHOT'
+apply from: 'gradle/scripts/properties.gradle'
+apply from: 'gradle/scripts/repositories.gradle'
 
-        projectSourceCompatibility = JavaVersion.VERSION_11
-        projectTargetCompatibility = JavaVersion.VERSION_11
-
-        // Dependencies
-        junitVersion = '5.4.1'
-        assertjVersion = '3.12.2'
-        mockitoVersion = '2.27.0'
-    }
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
 }
 
 subprojects {
-    apply plugin: 'idea'
-    apply plugin: 'java'
-    apply plugin: 'jacoco'
-
     group projectGroupName
     version projectVersion
 
     sourceCompatibility = projectSourceCompatibility
     targetCompatibility = projectTargetCompatibility
 
-    repositories {
-        mavenCentral()
-    }
-
     test {
         useJUnitPlatform()
-    }
-
-    jacocoTestReport {
-        reports {
-            xml.enabled = true
-            html.enabled = false
-        }
     }
 
     dependencies {
@@ -47,3 +24,5 @@ subprojects {
         testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
     }
 }
+
+apply from: 'gradle/scripts/jacoco.gradle'

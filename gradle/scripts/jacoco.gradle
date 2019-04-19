@@ -1,0 +1,46 @@
+project.ext.jacocoEnabled = project.gradle.startParameter.taskNames.contains('jacocoRootReport')
+
+if (jacocoEnabled) {
+    allprojects {
+        apply plugin: 'jacoco'
+
+        clean {
+            doFirst {
+                file("$buildDir/jacoco").deleteDir()
+                file("$buildDir/reports/jacoco").deleteDir()
+            }
+        }
+    }
+
+    subprojects {
+        test {
+            reports {
+                html.enabled = false
+            }
+        }
+    }
+
+    task jacocoRootReport(type: JacocoReport) {
+        dependsOn = subprojects.test
+
+        additionalSourceDirs.from = files(subprojects.sourceSets.main.allSource.srcDirs)
+        sourceDirectories.from = files(subprojects.sourceSets.main.allSource.srcDirs)
+        classDirectories.from = files(subprojects.sourceSets.main.output)
+        executionData.from = files(subprojects.jacocoTestReport.executionData)
+
+        reports {
+            html.enabled = false
+            csv.enabled = false
+            xml.enabled = true
+        }
+        onlyIf = {
+            true
+        }
+
+        doFirst {
+            executionData.from = files(executionData.findAll {
+                it.exists()
+            })
+        }
+    }
+}

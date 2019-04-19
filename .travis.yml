@@ -8,7 +8,7 @@ script:
   - ./gradlew clean test
 
 after_success:
-  - ./gradlew jacocoTestReport
+  - ./gradlew jacocoRootReport
   - bash <(curl -s https://codecov.io/bash)
 
 notifications:
