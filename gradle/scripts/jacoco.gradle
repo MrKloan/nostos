@@ -12,7 +12,7 @@ if (jacocoEnabled) {
         }
     }
 
-    subprojects {
+    configure(managedProjects) {
         test {
             reports {
                 html.enabled = false
@@ -21,12 +21,10 @@ if (jacocoEnabled) {
     }
 
     task jacocoRootReport(type: JacocoReport) {
-        dependsOn = subprojects.test
-
-        additionalSourceDirs.from = files(subprojects.sourceSets.main.allSource.srcDirs)
-        sourceDirectories.from = files(subprojects.sourceSets.main.allSource.srcDirs)
-        classDirectories.from = files(subprojects.sourceSets.main.output)
-        executionData.from = files(subprojects.jacocoTestReport.executionData)
+        additionalSourceDirs.from = files(managedProjects.sourceSets.main.allSource.srcDirs)
+        sourceDirectories.from = files(managedProjects.sourceSets.main.allSource.srcDirs)
+        classDirectories.from = files(managedProjects.sourceSets.main.output)
+        executionData.from = files(managedProjects.jacocoTestReport.executionData)
 
         reports {
             html.enabled = false

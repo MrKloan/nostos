@@ -1,27 +1,38 @@
-apply from: 'gradle/scripts/properties.gradle'
-apply from: 'gradle/scripts/repositories.gradle'
+apply plugin: 'idea'
+apply plugin: 'java'
 
-allprojects {
-    apply plugin: 'idea'
-    apply plugin: 'java'
+buildscript {
+    ext {
+        managedProjects = subprojects - project(":nostos-platform")
+    }
 }
 
-subprojects {
-    group projectGroupName
-    version projectVersion
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
 
-    sourceCompatibility = projectSourceCompatibility
-    targetCompatibility = projectTargetCompatibility
+configure(managedProjects) {
+    apply plugin: 'java'
+
+    group 'io.fries.nostos'
+    version '1.0.0-SNAPSHOT'
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 
     test {
         useJUnitPlatform()
     }
 
     dependencies {
-        testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
-        testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
-        testImplementation "org.assertj:assertj-core:${assertjVersion}"
-        testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+        implementation platform(project(':nostos-platform'))
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+        testImplementation 'org.junit.jupiter:junit-jupiter-params'
+        testImplementation 'org.assertj:assertj-core'
+        testImplementation 'org.mockito:mockito-junit-jupiter'
     }
 }
 

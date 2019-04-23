@@ -1,3 +1,4 @@
 rootProject.name = 'nostos'
 
 include 'nostos-core'
+include 'nostos-platform'
