@@ -10,9 +10,13 @@ if (jacocoEnabled) {
                 file("$buildDir/reports/jacoco").deleteDir()
             }
         }
+        
+        repositories {
+            mavenCentral()
+        }
     }
 
-    configure(managedProjects) {
+    configure(javaProjects) {
         test {
             reports {
                 html.enabled = false
@@ -21,10 +25,10 @@ if (jacocoEnabled) {
     }
 
     task jacocoRootReport(type: JacocoReport) {
-        additionalSourceDirs.from = files(managedProjects.sourceSets.main.allSource.srcDirs)
-        sourceDirectories.from = files(managedProjects.sourceSets.main.allSource.srcDirs)
-        classDirectories.from = files(managedProjects.sourceSets.main.output)
-        executionData.from = files(managedProjects.jacocoTestReport.executionData)
+        additionalSourceDirs.from = files(javaProjects.sourceSets.main.allSource.srcDirs)
+        sourceDirectories.from = files(javaProjects.sourceSets.main.allSource.srcDirs)
+        classDirectories.from = files(javaProjects.sourceSets.main.output)
+        executionData.from = files(javaProjects.jacocoTestReport.executionData)
 
         reports {
             html.enabled = false
