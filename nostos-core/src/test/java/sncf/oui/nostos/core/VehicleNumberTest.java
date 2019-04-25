@@ -1,4 +1,4 @@
-package oui.sncf.io;
+package sncf.oui.nostos.core;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

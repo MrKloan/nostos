@@ -1,4 +1,4 @@
-package oui.sncf.io.coordinates;
+package sncf.oui.nostos.core.coordinates;
 
 class Longitude {
 

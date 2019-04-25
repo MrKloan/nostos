@@ -1,4 +1,4 @@
-package oui.sncf.io;
+package sncf.oui.nostos.core;
 
 import static org.apache.commons.lang3.StringUtils.leftPad;
 

@@ -1,4 +1,4 @@
-# nostos [![Build Status](https://travis-ci.org/MrKloan/nostos.svg?branch=master)](https://travis-ci.org/MrKloan/nostos) [![codecov](https://codecov.io/gh/MrKloan/nostos/branch/master/graph/badge.svg)](https://codecov.io/gh/MrKloan/nostos)
+# nostos [![Build Status](https://api.travis-ci.org/MrKloan/nostos.svg?branch=dojo%2Fio)](https://travis-ci.org/MrKloan/nostos) [![codecov](https://codecov.io/gh/MrKloan/nostos/branch/dojo%2Fio/graph/badge.svg)](https://codecov.io/gh/MrKloan/nostos/branch/dojo%2Fio)
 > [Nostos](https://en.wikipedia.org/wiki/Nostos) is a Greek literary theme about journeying back home. Also, it is a thematic coding dojo for practicing Object Calisthenics.
 
 ## Getting started

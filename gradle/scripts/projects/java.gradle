@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
-group 'io.fries.nostos'
+group 'sncf.oui.nostos'
 version '1.0.0-SNAPSHOT'
 
 sourceCompatibility = JavaVersion.VERSION_11

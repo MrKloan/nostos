@@ -2,5 +2,8 @@ apply from: '../gradle/scripts/projects/java.gradle'
 apply from: '../gradle/scripts/projects/jacoco.gradle'
 
 dependencies {
-    implementation 'org.apache.commons:commons-lang3:3.9'
+    compileOnly 'org.immutables:value'
+    annotationProcessor 'org.immutables:value'
+
+    implementation 'org.apache.commons:commons-lang3'
 }

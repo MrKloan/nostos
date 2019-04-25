@@ -1,4 +1,4 @@
-package oui.sncf.io.coordinates;
+package sncf.oui.nostos.core.coordinates;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

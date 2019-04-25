@@ -1,4 +1,4 @@
-package oui.sncf.io.coordinates;
+package sncf.oui.nostos.core.coordinates;
 
 public class Coordinates {
 
@@ -15,7 +15,7 @@ public class Coordinates {
     }
 
     public double getLatitude() {
-        return latitude.getDegrees();
+        return latitude.degrees();
     }
 
     public double getLongitude() {
