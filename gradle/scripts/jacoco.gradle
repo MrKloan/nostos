@@ -1,4 +1,4 @@
-project.ext.jacocoEnabled = project.gradle.startParameter.taskNames.contains('jacocoRootReport')
+project.ext.jacocoEnabled = project.gradle.startParameter.taskNames.contains('coverageReport')
 
 if (jacocoEnabled) {
     allprojects {
@@ -24,7 +24,9 @@ if (jacocoEnabled) {
         }
     }
 
-    task jacocoRootReport(type: JacocoReport) {
+    task coverageReport(type: JacocoReport) {
+        dependsOn javaProjects.test
+
         additionalSourceDirs.from = files(javaProjects.sourceSets.main.allSource.srcDirs)
         sourceDirectories.from = files(javaProjects.sourceSets.main.allSource.srcDirs)
         classDirectories.from = files(javaProjects.sourceSets.main.output)
