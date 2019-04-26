@@ -9,6 +9,22 @@ configure(javaProjects) {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 
+    compileJava {
+        options.compilerArgs << '-encoding' << 'utf8'
+        options.compilerArgs << '-Xlint:all'
+        options.compilerArgs << '-Xlint:-processing'
+        options.compilerArgs << '-Xlint:-serial'
+        options.compilerArgs << '-Werror'
+    }
+
+    compileTestJava {
+        options.compilerArgs << '-encoding' << 'utf8'
+        options.compilerArgs << '-Xlint:all'
+        options.compilerArgs << '-Xlint:-processing'
+        options.compilerArgs << '-Xlint:-serial'
+        options.compilerArgs << '-Werror'
+    }
+
     repositories {
         mavenCentral()
     }

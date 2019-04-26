@@ -1,0 +1,9 @@
+project.ext.coverageEnabled = project.gradle.startParameter.taskNames.contains('coverageReport')
+
+if (coverageEnabled) {
+    apply from: 'gradle/scripts/jacoco.gradle'
+
+    task coverageReport {
+        dependsOn jacocoRootReport
+    }
+}
