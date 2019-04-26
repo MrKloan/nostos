@@ -1,0 +1,41 @@
+apply plugin: 'java'
+
+group 'io.fries.nostos'
+version '1.0.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+compileJava {
+    options.compilerArgs << '-encoding' << 'utf8'
+    options.compilerArgs << '-Xlint:all'
+    options.compilerArgs << '-Xlint:-processing'
+    options.compilerArgs << '-Xlint:-serial'
+    options.compilerArgs << '-Werror'
+}
+
+compileTestJava {
+    options.compilerArgs << '-encoding' << 'utf8'
+    options.compilerArgs << '-Xlint:all'
+    options.compilerArgs << '-Xlint:-processing'
+    options.compilerArgs << '-Xlint:-serial'
+    options.compilerArgs << '-Werror'
+}
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    implementation platform(project(':nostos-platform'))
+    annotationProcessor platform(project(':nostos-platform'))
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+}

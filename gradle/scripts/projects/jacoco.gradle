@@ -1,0 +1,9 @@
+if(coverageEnabled) {
+    apply plugin: 'jacoco'
+
+    test {
+        reports {
+            html.enabled = false
+        }
+    }
+}

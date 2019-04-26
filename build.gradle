@@ -1,4 +1,3 @@
 apply plugin: 'base'
 
-apply from: 'gradle/scripts/java.gradle'
-apply from: 'gradle/scripts/coverage.gradle'
+apply from: 'gradle/scripts/features/coverage.gradle'

@@ -1,0 +1,48 @@
+apply plugin: 'jacoco'
+
+repositories {
+    mavenCentral()
+}
+
+def MERGED_REPORT_PATH = "$rootProject.buildDir/reports/jacoco/test.exec"
+
+task jacocoMerge(type: JacocoMerge) {
+    destinationFile = file(MERGED_REPORT_PATH)
+    executionData = files([])
+
+    doFirst {
+        subprojects.stream()
+                .map { project -> file("$project.buildDir/jacoco") }
+                .filter { jacocoDirectory ->  jacocoDirectory.isDirectory() }
+                .forEach { jacocoDirectory -> jacocoDirectory.eachFileRecurse { file ->
+                    if (file.isFile()) {
+                        executionData file
+                    }
+                }}
+    }
+}
+
+task jacocoRootReport(type: JacocoReport) {
+    dependsOn ':jacocoMerge'
+
+    reports {
+        html.enabled = false
+        csv.enabled = false
+        xml.enabled = true
+    }
+
+    onlyIf = {
+        true
+    }
+
+    doFirst {
+        def javaProjects = subprojects.stream()
+                .filter { project -> project.plugins.hasPlugin(JavaPlugin) }
+                .toSet()
+
+        additionalSourceDirs.from = files(javaProjects.sourceSets.main.allSource.srcDirs)
+        sourceDirectories.from = files(javaProjects.sourceSets.main.allSource.srcDirs)
+        classDirectories.from = files(javaProjects.sourceSets.main.output)
+        executionData.from = file(MERGED_REPORT_PATH)
+    }
+}
