@@ -1,27 +1,40 @@
 package sncf.oui.nostos.core.coordinates;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import net.jqwik.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LatitudeTest {
 
-    @ParameterizedTest
-    @ValueSource(doubles = {-91., -90., -100., 90., 91., 100.})
-    void out_of_range_degrees_should_throw_exception(final double degrees) {
-
+    @Property
+    void out_of_range_degrees_should_throw_exception(@ForAll("invalidLatitudes") final double degrees) {
         assertThatThrownBy(() -> Latitude.of(degrees))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("latitude should be between -90° and 90°");
     }
 
-    @ParameterizedTest
-    @ValueSource(doubles = {-89., 0., 89.})
-    void should_return_valid_latitude(final double degrees) {
+    @Property
+    void should_return_valid_latitude(@ForAll("validLatitudes") final double degrees) {
         final Latitude latitude = Latitude.of(degrees);
 
         assertThat(latitude.degrees()).isEqualTo(degrees);
+    }
+
+    @Provide
+    Arbitrary<Double> invalidLatitudes() {
+        final Arbitrary<Double> lowerBounds = Arbitraries.doubles().lessOrEqual(-90.).unique();
+        final Arbitrary<Double> upperBounds = Arbitraries.doubles().greaterOrEqual(90.).unique();
+
+        return Arbitraries.oneOf(lowerBounds, upperBounds);
+    }
+
+    @Provide
+    Arbitrary<Double> validLatitudes() {
+        return Arbitraries.doubles()
+                .between(-90., 90.)
+                .filter(latitude -> latitude != -90.)
+                .filter(latitude -> latitude != 90.)
+                .unique();
     }
 }

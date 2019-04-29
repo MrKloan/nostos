@@ -7,6 +7,9 @@ import org.immutables.value.Value.Parameter;
 @Immutable
 abstract class Latitude {
 
+    private static final double MIN_LATITUDE = -90.;
+    private static final double MAX_LATITUDE = 90.;
+
     static Latitude of(final double degrees) {
         return ImmutableLatitude.of(degrees);
     }
@@ -16,7 +19,7 @@ abstract class Latitude {
 
     @Check
     void check() {
-        if (degrees() <= -90 || degrees() >= 90) {
+        if (degrees() <= MIN_LATITUDE || degrees() >= MAX_LATITUDE) {
             throw new IllegalArgumentException("latitude should be between -90° and 90°");
         }
     }
