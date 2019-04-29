@@ -19,6 +19,6 @@ public class Coordinates {
     }
 
     public double getLongitude() {
-        return longitude.getDegrees();
+        return longitude.degrees();
     }
 }

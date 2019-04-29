@@ -1,25 +1,26 @@
 package sncf.oui.nostos.core.coordinates;
 
-class Longitude {
+import org.immutables.value.Value.Check;
+import org.immutables.value.Value.Immutable;
+import org.immutables.value.Value.Parameter;
 
-    public static final int MAX_DEGREES = 180;
-    public static final int MIN_DEGREES = -180;
+@Immutable
+abstract class Longitude {
 
-    private final double degrees;
+    private static final double MAX_LONGITUDE = 180.;
+    private static final double MIN_LATITUDE = -180.;
 
-    private Longitude(final double degrees) {
-        this.degrees = degrees;
+    static Longitude of(final double degrees) {
+        return ImmutableLongitude.of(degrees);
     }
 
-    public static Longitude of(final double degrees) {
-        if (degrees <= MIN_DEGREES || degrees >= MAX_DEGREES) {
+    @Parameter
+    abstract double degrees();
+
+    @Check
+    void check() {
+        if (degrees() <= MIN_LATITUDE || degrees() >= MAX_LONGITUDE) {
             throw new IllegalArgumentException("longitude should be between -180° and 180°");
         }
-
-        return new Longitude(degrees);
-    }
-
-    public double getDegrees() {
-        return degrees;
     }
 }

@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class LatitudeTest {
 
     @Property
-    void out_of_range_degrees_should_throw_exception(@ForAll("invalidLatitudes") final double degrees) {
+    void out_of_range_degrees_should_throw_exception(@ForAll("invalidLongitudes") final double degrees) {
         assertThatThrownBy(() -> Latitude.of(degrees))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("latitude should be between -90° and 90°");
