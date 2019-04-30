@@ -1,4 +1,16 @@
+buildscript {
+    repositories {
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'gradle.plugin.org.assertj:assertj-generator-gradle-plugin:0.0.6b'
+    }
+}
+
 apply plugin: 'java'
+apply plugin: org.assertj.generator.gradle.AssertJGeneratorGradlePlugin
 
 group 'io.fries.nostos'
 version '1.0.0-SNAPSHOT'
@@ -24,6 +36,12 @@ compileTestJava {
 
 repositories {
     mavenCentral()
+}
+
+sourceSets {
+    main {
+        assertJ {}
+    }
 }
 
 test {
