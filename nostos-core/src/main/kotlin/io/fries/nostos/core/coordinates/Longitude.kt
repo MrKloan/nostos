@@ -1,6 +1,6 @@
 package io.fries.nostos.core.coordinates
 
-class Longitude(val degrees: Double) {
+internal class Longitude(val degrees: Double) {
 
     companion object {
         private const val MIN_DEGREES = -180.0

@@ -4,7 +4,7 @@ import net.jqwik.api.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
-class LatitudeTest {
+internal class LatitudeTest {
 
     companion object {
         private const val MIN_DEGREES = -90.0
