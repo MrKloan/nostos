@@ -1,14 +1,16 @@
 package io.fries.nostos.core.coordinates
 
+import net.jqwik.api.ForAll
+import net.jqwik.api.Property
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 
 internal class CoordinatesTest {
 
-    @Test
-    internal fun should_create_coordinates_from_degrees() {
-        val latitude = 1.0
-        val longitude = 3.0
+    @Property
+    internal fun should_create_coordinates_from_degrees(
+            @ForAll @LatitudeDegrees latitude: Double,
+            @ForAll @LongitudeDegrees longitude: Double
+    ) {
         val coordinates = Coordinates.of(latitude, longitude)
 
         assertThat(coordinates.latitude).isEqualTo(latitude)
