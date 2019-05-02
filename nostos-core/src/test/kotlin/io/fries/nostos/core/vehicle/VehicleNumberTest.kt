@@ -1,8 +1,10 @@
 package io.fries.nostos.core.vehicle
 
 import io.fries.nostos.core.vehicle.VehicleNumberTest.Companion.VEHICLE_NUMBER_LENGTH
+import net.jqwik.api.Arbitraries
 import net.jqwik.api.ForAll
 import net.jqwik.api.Property
+import net.jqwik.api.Provide
 import net.jqwik.api.constraints.NumericChars
 import net.jqwik.api.constraints.StringLength
 import net.jqwik.api.constraints.UpperChars
@@ -26,4 +28,13 @@ internal class VehicleNumberTest {
         val vehicleNumber = VehicleNumber(number)
         assertThat(vehicleNumber.number).isEqualTo(number)
     }
+
+    @Property
+    internal fun should_uppercase_an_alphanumerical_string_of_six_characters(@ForAll("lowercase_numbers") lowerCaseNumber: String) {
+        val vehicleNumber = VehicleNumber(lowerCaseNumber)
+        assertThat(vehicleNumber.number).isEqualTo(lowerCaseNumber.toUpperCase())
+    }
+
+    @Provide
+    fun lowercase_numbers() = Arbitraries.strings().alpha().numeric().ofLength(VEHICLE_NUMBER_LENGTH).unique().map(String::toLowerCase)
 }
