@@ -11,6 +11,20 @@ buildscript {
 
 apply plugin: org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+        allWarningsAsErrors = true
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+        allWarningsAsErrors = true
+    }
+}
+
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
