@@ -11,6 +11,7 @@ internal class VehicleNumberTest {
 
     companion object {
         private const val VEHICLE_NUMBER_LENGTH = 6
+        private const val ZERO = '0'
     }
 
     @Property
@@ -35,10 +36,19 @@ internal class VehicleNumberTest {
     internal fun should_throw_when_the_number_is_longer_than_its_expected_length(@ForAll("longer_numbers") number: String) {
         assertThatIllegalArgumentException()
                 .isThrownBy { VehicleNumber(number) }
-                .withMessage("Vehicle number must have a length of $VEHICLE_NUMBER_LENGTH")
+                .withMessage("Vehicle number cannot be longer than $VEHICLE_NUMBER_LENGTH")
                 .withNoCause()
     }
 
     @Provide
     fun longer_numbers() = Arbitraries.strings().alpha().numeric().ofMinLength(VEHICLE_NUMBER_LENGTH + 1).unique().map(String::toUpperCase)
+
+    @Property
+    internal fun should_pad_on_the_left_with_zeroes_when_the_number_is_shorter_than_its_expected_length(@ForAll("shorter_numbers") number: String) {
+        val vehicleNumber = VehicleNumber(number)
+        assertThat(vehicleNumber.number).isEqualTo(number.padStart(VEHICLE_NUMBER_LENGTH, ZERO))
+    }
+
+    @Provide
+    fun shorter_numbers() = Arbitraries.strings().alpha().numeric().ofMaxLength(VEHICLE_NUMBER_LENGTH - 1).unique().map(String::toUpperCase)
 }
