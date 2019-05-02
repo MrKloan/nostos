@@ -32,7 +32,7 @@ internal class LongitudeTest {
     internal fun should_throw_when_the_degrees_are_out_of_range(@ForAll("out_of_range_degrees") degrees: Double) {
         assertThatIllegalArgumentException()
                 .isThrownBy { Longitude(degrees) }
-                .withMessage("Longitude degrees should be in the range [$MIN_DEGREES, $MAX_DEGREES]")
+                .withMessage("Longitude '$degrees' should be contained in the range [$MIN_DEGREES, $MAX_DEGREES]")
                 .withNoCause()
     }
 

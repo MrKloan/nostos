@@ -32,7 +32,7 @@ internal class LatitudeTest {
     internal fun should_throw_when_the_degrees_are_out_of_range(@ForAll("out_of_range_degrees") degrees: Double) {
         assertThatIllegalArgumentException()
                 .isThrownBy { Latitude(degrees) }
-                .withMessage("Latitude degrees should be in the range [$MIN_DEGREES, $MAX_DEGREES]")
+                .withMessage("Latitude '$degrees' should be contained in the range [$MIN_DEGREES, $MAX_DEGREES]")
                 .withNoCause()
     }
 
