@@ -1,9 +1,6 @@
 package io.fries.nostos.core.vehicle
 
-import net.jqwik.api.Arbitraries
-import net.jqwik.api.ForAll
-import net.jqwik.api.Property
-import net.jqwik.api.Provide
+import net.jqwik.api.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
@@ -23,7 +20,12 @@ internal class VehicleNumberTest {
     }
 
     @Provide
-    fun valid_numbers() = Arbitraries.strings().alpha().numeric().ofLength(MAX_LENGTH).unique().map(String::toUpperCase)
+    fun valid_numbers(): Arbitrary<String> = Arbitraries.strings()
+            .alpha()
+            .numeric()
+            .ofLength(MAX_LENGTH)
+            .unique()
+            .map(String::toUpperCase)
 
     @Property
     internal fun should_uppercase_an_alphanumerical_string_of_six_characters(@ForAll("lowercase_numbers") lowerCaseNumber: String) {
@@ -32,7 +34,12 @@ internal class VehicleNumberTest {
     }
 
     @Provide
-    fun lowercase_numbers() = Arbitraries.strings().alpha().numeric().ofLength(MAX_LENGTH).unique().map(String::toLowerCase)
+    fun lowercase_numbers(): Arbitrary<String> = Arbitraries.strings()
+            .alpha()
+            .numeric()
+            .ofLength(MAX_LENGTH)
+            .unique()
+            .map(String::toLowerCase)
 
     @Property
     internal fun should_throw_when_the_number_is_longer_than_its_expected_length(@ForAll("longer_numbers") number: String) {
@@ -43,7 +50,12 @@ internal class VehicleNumberTest {
     }
 
     @Provide
-    fun longer_numbers() = Arbitraries.strings().alpha().numeric().ofMinLength(MAX_LENGTH + 1).unique().map(String::toUpperCase)
+    fun longer_numbers(): Arbitrary<String> = Arbitraries.strings()
+            .alpha()
+            .numeric()
+            .ofMinLength(MAX_LENGTH + 1)
+            .unique()
+            .map(String::toUpperCase)
 
     @Property
     internal fun should_pad_on_the_left_with_zeroes_when_the_number_is_shorter_than_its_expected_length(@ForAll("shorter_numbers") number: String) {
@@ -52,7 +64,13 @@ internal class VehicleNumberTest {
     }
 
     @Provide
-    fun shorter_numbers() = Arbitraries.strings().alpha().numeric().ofMinLength(MIN_LENGTH).ofMaxLength(MAX_LENGTH - 1).unique().map(String::toUpperCase)
+    fun shorter_numbers(): Arbitrary<String> = Arbitraries.strings()
+            .alpha()
+            .numeric()
+            .ofMinLength(MIN_LENGTH)
+            .ofMaxLength(MAX_LENGTH - 1)
+            .unique()
+            .map(String::toUpperCase)
 
     @Test
     internal fun should_throw_when_the_number_is_empty() {
@@ -71,5 +89,11 @@ internal class VehicleNumberTest {
     }
 
     @Provide
-    fun numbers_with_invalid_characters() = Arbitraries.strings().ascii().whitespace().ofLength(MAX_LENGTH).unique().map(String::toUpperCase)
+    fun numbers_with_invalid_characters(): Arbitrary<String> = Arbitraries.strings()
+            .withCharRange(' ', '/')
+            .withCharRange(':', '@')
+            .withCharRange('{', '°')
+            .ofLength(MAX_LENGTH)
+            .unique()
+            .map(String::toUpperCase)
 }
