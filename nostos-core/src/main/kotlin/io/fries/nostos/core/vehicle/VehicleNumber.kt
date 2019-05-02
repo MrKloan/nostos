@@ -3,13 +3,16 @@ package io.fries.nostos.core.vehicle
 internal class VehicleNumber(number: String) {
 
     companion object {
-        private const val VEHICLE_NUMBER_LENGTH = 6
+        private const val MIN_LENGTH = 1
+        private const val MAX_LENGTH = 6
         private const val ZERO = '0'
+
+        private val validNumberPattern = Regex("[a-zA-Z0-9]{$MIN_LENGTH,$MAX_LENGTH}")
     }
 
-    val number = number.toUpperCase().padStart(VEHICLE_NUMBER_LENGTH, ZERO)
+    val number = number.toUpperCase().padStart(MAX_LENGTH, ZERO)
 
     init {
-        require(number.length <= VEHICLE_NUMBER_LENGTH) { "Vehicle number cannot be longer than $VEHICLE_NUMBER_LENGTH" }
+        require(validNumberPattern.matches(number)) { "Vehicle number '$number' should be an alphanumerical string between $MIN_LENGTH and $MAX_LENGTH characters" }
     }
 }
