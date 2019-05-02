@@ -1,6 +1,8 @@
 package io.fries.nostos.core.vehicle
 
-class CompanyName(name: String) {
+internal class CompanyName(name: String) {
+
+    val name = name.trim()
 
     init {
         require(name.isNotEmpty()) { "Company name cannot be empty" }
