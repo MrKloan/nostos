@@ -151,6 +151,9 @@
                     <groupId>io.quarkus</groupId>
                     <artifactId>quarkus-maven-plugin</artifactId>
                     <version>${quarkus.version}</version>
+                    <configuration>
+                        <uberJar>true</uberJar>
+                    </configuration>
                     <executions>
                         <execution>
                             <goals>
@@ -197,6 +200,9 @@
                         <groupId>io.quarkus</groupId>
                         <artifactId>quarkus-maven-plugin</artifactId>
                         <version>${quarkus.version}</version>
+                        <configuration>
+                            <uberJar>false</uberJar>
+                        </configuration>
                         <executions>
                             <execution>
                                 <goals>
