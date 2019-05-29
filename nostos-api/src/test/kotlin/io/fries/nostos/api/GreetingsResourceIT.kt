@@ -3,7 +3,7 @@ package io.fries.nostos.api
 import io.quarkus.test.junit.QuarkusTest
 import io.restassured.RestAssured.given
 import io.restassured.http.ContentType
-import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.equalTo
 import org.junit.jupiter.api.Test
 
 @QuarkusTest
@@ -16,6 +16,6 @@ internal class GreetingsResourceIT {
                 .then()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
-                .body(`is`("{\"message\":\"Hello, World!\"}"))
+                .body("message", equalTo("Hello, World!"))
     }
 }

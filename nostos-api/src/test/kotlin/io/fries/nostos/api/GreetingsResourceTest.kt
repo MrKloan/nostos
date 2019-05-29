@@ -20,6 +20,6 @@ internal class GreetingsResourceTest {
         val greetings = greetingResource.hello(name)
 
         verify(greeter).greet(name)
-        assertThat(greetings).isEqualTo("{\"message\":\"$message\"}")
+        assertThat(greetings).isEqualTo(Greeting(message))
     }
 }
