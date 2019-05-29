@@ -1,5 +1,7 @@
 .gradle/
 .idea/
 build/
+target/
+out/
 
 .jqwik-database
