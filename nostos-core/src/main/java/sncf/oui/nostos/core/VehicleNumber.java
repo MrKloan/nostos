@@ -1,28 +1,44 @@
 package sncf.oui.nostos.core;
 
+import org.immutables.value.Value;
+
 import static org.apache.commons.lang3.StringUtils.leftPad;
 
-public class VehicleNumber {
-    public static final int NUMBER_LENGTH = 6;
-    public static final String ZERO_PADDING = "0";
-    private final String number;
-
-    private VehicleNumber(final String number) {
-        this.number = number;
-    }
+@Value.Immutable
+abstract class VehicleNumber {
+    private static final int NUMBER_LENGTH = 6;
+    private static final String ZERO_PADDING = "0";
 
     public static VehicleNumber of(final String number) {
-        if (number.length() > NUMBER_LENGTH) {
-            throw new IllegalArgumentException("Vehicle number should have 6 chars or less");
-        }
-        if (!number.matches("[a-zA-Z0-9]*")) {
-            throw new IllegalArgumentException("Vehicle number should not contain special character");
-        }
-        final String formattedNumber = leftPad(number, NUMBER_LENGTH, ZERO_PADDING);
-        return new VehicleNumber(formattedNumber.toUpperCase());
+        return ImmutableVehicleNumber.of(number);
     }
 
-    public String getNumber() {
-        return number;
+    @Value.Parameter
+    abstract String number();
+
+    @Value.Check
+    VehicleNumber normalize() {
+        return isValid()
+                ? this
+                : of(normalizedNumber());
     }
+
+    private boolean isValid() {
+        if (number().isBlank()) {
+            throw new IllegalArgumentException("Vehicle number should not be empty");
+        }
+        if (number().length() > NUMBER_LENGTH) {
+            throw new IllegalArgumentException("Vehicle number should have 6 chars or less");
+        }
+        if (!number().matches("[a-zA-Z0-9]*")) {
+            throw new IllegalArgumentException("Vehicle number should not contain special character");
+        }
+
+        return number().equals(number().toUpperCase()) && number().length() == NUMBER_LENGTH;
+    }
+
+    private String normalizedNumber() {
+        return leftPad(number(), NUMBER_LENGTH, ZERO_PADDING).toUpperCase();
+    }
+
 }
