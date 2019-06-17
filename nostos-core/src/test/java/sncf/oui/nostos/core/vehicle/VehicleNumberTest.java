@@ -1,4 +1,4 @@
-package sncf.oui.nostos.core;
+package sncf.oui.nostos.core.vehicle;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -57,4 +57,5 @@ class VehicleNumberTest {
                 .isThrownBy(() -> VehicleNumber.of(""))
                 .withMessage("Vehicle number should not be empty");
     }
+
 }

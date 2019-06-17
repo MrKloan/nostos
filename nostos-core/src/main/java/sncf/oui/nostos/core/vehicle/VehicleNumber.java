@@ -1,4 +1,4 @@
-package sncf.oui.nostos.core;
+package sncf.oui.nostos.core.vehicle;
 
 import org.immutables.value.Value;
 
@@ -34,7 +34,8 @@ abstract class VehicleNumber {
             throw new IllegalArgumentException("Vehicle number should not contain special character");
         }
 
-        return number().equals(number().toUpperCase()) && number().length() == NUMBER_LENGTH;
+        return number().equals(number().toUpperCase()) // NOSONAR
+                && number().length() == NUMBER_LENGTH;
     }
 
     private String normalizedNumber() {
