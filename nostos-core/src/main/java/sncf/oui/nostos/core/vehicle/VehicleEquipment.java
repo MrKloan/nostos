@@ -15,6 +15,7 @@ public abstract class VehicleEquipment {
 
     @Value.Check
     void check() {
+        // TODO Refactorer en créant des paires de prédicat / message d'erreur et streamer sur la liste de prédicats pour extraire les erreurs
         var messages = new HashSet<String>();
         if (equipment().length() != 3) {
             messages.add("not 3 chars long");
