@@ -4,6 +4,8 @@ import org.immutables.value.Value;
 import org.immutables.value.Value.Immutable;
 import org.immutables.value.Value.Parameter;
 
+import java.util.HashSet;
+
 @Immutable
 public abstract class VehicleEquipment {
 
@@ -13,8 +15,21 @@ public abstract class VehicleEquipment {
 
     @Value.Check
     void check() {
+        var messages = new HashSet<String>();
         if (equipment().length() != 3) {
-            throw new IllegalArgumentException("Vehicle Equipment length should be 3 chars.");
+            messages.add("not 3 chars long");
+
+        }
+
+        if (!equipment().matches("[A-Z]*")) {
+            messages.add("non-alphabetical chars");
+        }
+
+        if (!messages.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Equipment is invalid: " + String.join(", ", messages)
+            );
+
         }
     }
 

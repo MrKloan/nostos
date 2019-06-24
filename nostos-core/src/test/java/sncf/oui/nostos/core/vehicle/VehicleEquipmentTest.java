@@ -24,10 +24,12 @@ class VehicleEquipmentTest {
     }
 
     @Property
-    void should_throw_exception_when_vehicle_equipment_length_is_invalid(@ForAll("vehicleEquipmentsWithInvalidLength") String vehicleEquipmentLengthInvalid) {
+    void should_throw_exception_when_vehicle_equipment_length_is_invalid(
+            @ForAll("vehicleEquipmentsWithInvalidLength") String vehicleEquipmentLengthInvalid
+    ) {
         assertThatExceptionOfType(IllegalArgumentException.class)
                 .isThrownBy(() -> VehicleEquipment.of(vehicleEquipmentLengthInvalid))
-                .withMessage("Vehicle Equipment length should be 3 chars.");
+                .withMessageContaining("Equipment is invalid: not 3 chars long");
     }
 
     @Provide
@@ -36,6 +38,25 @@ class VehicleEquipmentTest {
                 .alpha()
                 .unique()
                 .filter(equipment -> equipment.length() != 3)
+                .map(String::toUpperCase);
+    }
+
+    @Property
+    void should_throw_exception_when_vehicle_equipment_contains_non_alphabetical_chars(
+            @ForAll("vehicleEquipmentsWithNonAlphabeticalCharacters") final String equipment
+    ) {
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> VehicleEquipment.of(equipment))
+                .withMessageContaining("Equipment is invalid: non-alphabetical chars");
+    }
+
+    @Provide
+    Arbitrary<String> vehicleEquipmentsWithNonAlphabeticalCharacters() {
+        return Arbitraries.strings()
+                .ascii()
+                .ofLength(3)
+                .unique()
+                .filter(equipment -> !equipment.matches("[a-zA-Z]{3}"))
                 .map(String::toUpperCase);
     }
 }
